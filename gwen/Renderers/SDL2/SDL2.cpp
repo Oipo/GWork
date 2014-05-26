@@ -175,24 +175,43 @@ namespace Gwen
             }
         }
 
-        void SDL2::DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect rect,
-                                    float u1, float v1, float u2, float v2)
-        {
-            SDL_Texture *tex = static_cast<SDL_Texture*>(pTexture->data);
+		void SDL2::DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect rect,
+			float u1, float v1, float u2, float v2)
+		{
+			SDL_Texture *tex = static_cast<SDL_Texture*>(pTexture->data);
 
-            if (!tex)
-                return DrawMissingImage(rect);
+			if (!tex)
+				return DrawMissingImage(rect);
 
-            Translate(rect);
-            
-            const unsigned int w = pTexture->width;
-            const unsigned int h = pTexture->height;
-            
-            const SDL_Rect source = { int(u1*w), int(v1*h), int((u2-u1)*w), int((v2-v1)*h) },
-                             dest = { rect.x, rect.y, rect.w, rect.h };
+			Translate(rect);
 
-            SDL_RenderCopy(m_renderer, tex, &source, &dest);
-        }
+			const unsigned int w = pTexture->width;
+			const unsigned int h = pTexture->height;
+
+			const SDL_Rect source = { int(u1*w), int(v1*h), int((u2 - u1)*w), int((v2 - v1)*h) },
+				dest = { rect.x, rect.y, rect.w, rect.h };
+
+			SDL_RenderCopy(m_renderer, tex, &source, &dest);
+		}
+
+		void SDL2::DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect dRect,
+			Gwen::Rect sRect)
+		{
+			SDL_Texture *tex = static_cast<SDL_Texture*>(pTexture->data);
+
+			if (!tex)
+				return DrawMissingImage(dRect);
+
+			Translate(dRect);
+
+			const unsigned int w = pTexture->width;
+			const unsigned int h = pTexture->height;
+
+			const SDL_Rect source = { sRect.x, sRect.y, sRect.w, sRect.h },
+				dest = { dRect.x, dRect.y, dRect.w, dRect.h };
+
+			SDL_RenderCopy(m_renderer, tex, &source, &dest);
+		}
 
         Gwen::Color SDL2::PixelColour(Gwen::Texture* pTexture, unsigned int x, unsigned int y,
                                       const Gwen::Color& col_default)

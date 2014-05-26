@@ -48,6 +48,8 @@ namespace Gwen
             void DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect pTargetRect,
                                   float u1 = 0.0f, float v1 = 0.0f,
                                   float u2 = 1.0f, float v2 = 1.0f) override;
+			void DrawTexturedRect(Gwen::Texture* pTexture, Gwen::Rect pTargetRect,
+								  Gwen::Rect pSourceRect);
             void        LoadTexture(Gwen::Texture* pTexture) override;
             void        FreeTexture(Gwen::Texture* pTexture) override;
             Gwen::Color PixelColour(Gwen::Texture* pTexture, unsigned int x, unsigned int y,
